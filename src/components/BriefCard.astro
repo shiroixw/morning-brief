@@ -1,0 +1,70 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  summary: string;
+  sample?: boolean;
+  featured?: boolean;
+}
+
+const { href, title, date, summary, sample = false, featured = false } = Astro.props;
+
+const dateLabel = date.toLocaleDateString('zh-CN', {
+  timeZone: 'Asia/Shanghai',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'short',
+});
+
+const iso = date.toISOString().slice(0, 10);
+---
+
+<article
+  class:list={[
+    'group relative rounded-2xl border border-rule/70 bg-card transition-all duration-300',
+    'hover:border-rule hover:shadow-[0_18px_40px_-28px_rgba(28,25,23,0.35)]',
+    featured ? 'p-7 md:p-9' : 'p-6 md:p-7',
+  ]}
+>
+  <div class="mb-4 flex flex-wrap items-center gap-x-3 gap-y-2">
+    <time
+      datetime={iso}
+      class="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-muted"
+    >
+      {dateLabel}
+    </time>
+    {
+      sample && (
+        <span class="rounded-full border border-rule bg-paper-deep px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-muted">
+          Sample
+        </span>
+      )
+    }
+  </div>
+
+  <h2
+    class:list={[
+      'font-display font-medium tracking-tight text-ink transition-colors group-hover:text-accent',
+      featured ? 'text-2xl md:text-[1.75rem] leading-snug' : 'text-xl leading-snug',
+    ]}
+  >
+    <a href={href} class="after:absolute after:inset-0">
+      {title}
+    </a>
+  </h2>
+
+  <p
+    class:list={[
+      'mt-3 text-ink-muted leading-relaxed',
+      featured ? 'text-[1.02rem] max-w-2xl' : 'text-[0.95rem]',
+    ]}
+  >
+    {summary}
+  </p>
+
+  <p class="mt-5 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-accent/80 transition-colors group-hover:text-accent">
+    阅读全文 →
+  </p>
+</article>
