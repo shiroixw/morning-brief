@@ -1,0 +1,72 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+
+export async function getStaticPaths() {
+  const briefs = await getCollection('briefs');
+  return briefs.map((brief) => ({
+    params: { id: brief.id },
+    props: { brief },
+  }));
+}
+
+const { brief } = Astro.props;
+const { Content } = await render(brief);
+
+const dateLabel = brief.data.date.toLocaleDateString('zh-CN', {
+  timeZone: 'Asia/Shanghai',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  weekday: 'long',
+});
+
+const iso = brief.data.date.toISOString().slice(0, 10);
+---
+
+<BaseLayout title={brief.data.title} description={brief.data.summary} ogType="article">
+  <Header />
+  <main id="main" class="mx-auto w-full max-w-3xl flex-1 px-5 py-12 md:px-8 md:py-16">
+    <article>
+      <header class="mb-10 border-b border-rule/80 pb-8">
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+          <time
+            datetime={iso}
+            class="font-mono text-[0.72rem] uppercase tracking-[0.14em] text-ink-muted"
+          >
+            {dateLabel}
+          </time>
+          {
+            brief.data.sample && (
+              <span class="rounded-full border border-rule bg-paper-deep px-2.5 py-0.5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-muted">
+                Sample
+              </span>
+            )
+          }
+        </div>
+        <h1 class="font-display text-[1.85rem] font-medium leading-tight tracking-tight text-ink md:text-[2.35rem]">
+          {brief.data.title}
+        </h1>
+        <p class="mt-4 max-w-2xl text-[1.05rem] leading-relaxed text-ink-muted">
+          {brief.data.summary}
+        </p>
+      </header>
+
+      <div class="prose-brief">
+        <Content />
+      </div>
+
+      <nav class="mt-14 border-t border-rule/80 pt-8" aria-label="简报导航">
+        <a
+          href="/"
+          class="font-mono text-[0.72rem] uppercase tracking-[0.16em] text-ink-muted transition-colors hover:text-accent"
+        >
+          ← 返回归档
+        </a>
+      </nav>
+    </article>
+  </main>
+  <Footer />
+</BaseLayout>

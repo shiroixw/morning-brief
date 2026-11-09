@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f6f3ee;
+  --color-paper-deep: #efebe3;
+  --color-ink: #1c1917;
+  --color-ink-soft: #44403c;
+  --color-ink-muted: #78716c;
+  --color-accent: #9a3412;
+  --color-accent-soft: #c2410c;
+  --color-rule: #e4dfd6;
+  --color-card: #fffcf7;
+  --font-display: "Noto Serif SC", "Source Serif 4", "Songti SC", serif;
+  --font-body: "Noto Sans SC", "Source Sans 3", "PingFang SC", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply bg-paper text-ink font-body;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-accent) 18%, transparent);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  .prose-brief {
+    @apply text-ink-soft leading-[1.85] text-[1.05rem];
+  }
+
+  .prose-brief h2 {
+    @apply font-display text-ink text-xl md:text-2xl font-medium mt-12 mb-4 tracking-tight;
+  }
+
+  .prose-brief h3 {
+    @apply font-display text-ink text-lg mt-8 mb-3;
+  }
+
+  .prose-brief p {
+    @apply mb-5;
+  }
+
+  .prose-brief ul {
+    @apply mb-5 pl-5 list-disc space-y-2;
+  }
+
+  .prose-brief li {
+    @apply pl-1;
+  }
+
+  .prose-brief a {
+    @apply text-accent underline decoration-accent/30 underline-offset-[0.22em]
+      transition-colors duration-200 hover:text-accent-soft hover:decoration-accent-soft/50;
+  }
+
+  .prose-brief strong {
+    @apply text-ink font-medium;
+  }
+
+  .prose-brief blockquote {
+    @apply border-l-2 border-rule pl-5 my-8 text-ink-muted italic;
+  }
+
+  .prose-brief hr {
+    @apply border-0 border-t border-rule my-10;
+  }
+
+  .prose-brief code {
+    @apply font-mono text-[0.9em] bg-paper-deep px-1.5 py-0.5 rounded-sm;
+  }
+}
