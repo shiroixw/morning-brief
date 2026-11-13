@@ -78,4 +78,36 @@
   .prose-brief code {
     @apply font-mono text-[0.9em] bg-paper-deep px-1.5 py-0.5 rounded-sm;
   }
+
+  .prose-brief li.has-article-feedback {
+    @apply pb-1;
+  }
+
+  .article-feedback {
+    @apply mt-2 flex flex-wrap items-center gap-x-3 gap-y-1
+      font-mono text-[0.7rem] tracking-[0.08em] text-ink-muted;
+  }
+
+  .article-feedback__btn {
+    @apply appearance-none border-0 bg-transparent p-0
+      text-ink-muted transition-colors duration-200
+      hover:text-ink focus-visible:outline-none focus-visible:text-accent;
+    cursor: pointer;
+  }
+
+  .article-feedback__btn.is-active {
+    @apply text-accent;
+  }
+
+  .article-feedback__sep {
+    @apply text-rule;
+  }
+
+  .article-feedback.is-pending {
+    opacity: 0.65;
+  }
+
+  .article-feedback__status {
+    @apply text-[0.65rem] tracking-normal text-ink-muted/80;
+  }
 }
