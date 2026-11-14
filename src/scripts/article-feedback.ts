@@ -1,5 +1,9 @@
 type Vote = 'like' | 'dislike';
 
+/** Visible control labels on brief article pages. */
+export const LIKE_LABEL = '点赞';
+export const DISLIKE_LABEL = '点踩';
+
 const STORAGE_PREFIX = 'mb-feedback:';
 
 function storageKey(articleId: string): string {
@@ -92,12 +96,12 @@ function mountControls(el: HTMLElement): void {
   root.setAttribute('role', 'group');
   root.setAttribute('aria-label', '文章反馈');
 
-  const likeBtn = createButton('喜欢', 'like');
+  const likeBtn = createButton(LIKE_LABEL, 'like');
   const sep = document.createElement('span');
   sep.className = 'article-feedback__sep';
   sep.setAttribute('aria-hidden', 'true');
   sep.textContent = '·';
-  const dislikeBtn = createButton('不喜欢', 'dislike');
+  const dislikeBtn = createButton(DISLIKE_LABEL, 'dislike');
   const status = document.createElement('span');
   status.className = 'article-feedback__status';
   status.setAttribute('aria-live', 'polite');
